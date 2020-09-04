@@ -1,0 +1,33 @@
+<fxrateinfo>
+  <header>
+    <createdate>20200901</createdate>
+    <applydate>20200902</applydate>
+    <applytime>0800</applytime>
+    <datacount>0288</datacount>
+  </header>
+  <countries>
+    <country>
+      <countrycode>CN</countrycode>
+      <countryname>China</countryname>
+      <currency>
+        <currencycode>CNY</currencycode>
+        <currencyname>Chinese Yuan Renminbi</currencyname>
+        <fxrate>0.0636548</fxrate>
+      </currency>
+      <currency>
+        <currencycode>USD</currencycode>
+        <currencyname>US Dollar</currencyname>
+        <fxrate>0.0093211</fxrate>
+      </currency>
+    </country>
+    <country>
+      <countrycode>US</countrycode>
+      <countryname>United States</countryname>
+      <currency>
+        <currencycode>USD</currencycode>
+        <currencyname>US Dollar</currencyname>
+        <fxrate>0.0090763</fxrate>
+      </currency>
+    </country>
+  </countries>
+</fxrateinfo>
