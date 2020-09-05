@@ -1,4 +1,4 @@
-# SevenBankFxRate
+# SevenBankFxRate [![Gem Version](https://badge.fury.io/rb/seven_bank_fx_rate.svg)](https://badge.fury.io/rb/seven_bank_fx_rate)
 
 Easier access to the foreign exchange rate data of Seven Bank international
 money transfer service in Japan, with JPY1.00 as the base currency and unit.
