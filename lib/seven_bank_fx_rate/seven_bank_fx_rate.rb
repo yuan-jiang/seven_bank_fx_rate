@@ -50,8 +50,10 @@ module SevenBankFxRate
       @data ||= Data.new
     end
 
+    GHOST_METHOD_PATTERN = /\Acountry_[A-Za-z]{2}_currency_[A-Za-z]{3}\z/.freeze
+
     def method_missing(method_name, *arguments, &block)
-      if /\Acountry_[A-Za-z]{2}_currency_[A-Za-z]{3}\z/ =~ method_name.to_s
+      if GHOST_METHOD_PATTERN =~ method_name.to_s
         _, country_code, _, currency_code = method_name.to_s.split('_')
         send :for, country_code, currency_code
       else
@@ -60,7 +62,7 @@ module SevenBankFxRate
     end
 
     def respond_to_missing?(method_name, include_private = false)
-      method_name.to_s.start_with?('country_') || super
+      !!(GHOST_METHOD_PATTERN =~ method_name.to_s) || super
     end
   end
 
