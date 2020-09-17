@@ -156,4 +156,37 @@ RSpec.describe SevenBankFxRate do
       end
     end
   end
+
+  context 'under multi-thread environment' do
+    before :each do
+      stub_request(
+        :get,
+        SevenBankFxRate::SOURCE_URL
+      ).to_return(
+        status: 200,
+        body: File.open(File.expand_path('../fixtures/fx_rate_full.xml', __dir__)).read
+      )
+      SevenBankFxRate.instance_variable_set('@data', nil)
+    end
+
+    it 'makes http request only once' do
+      WebMock.reset_executed_requests!
+      3.times.map do
+        Thread.new do
+          SevenBankFxRate.apply_date
+        end
+      end.each(&:join)
+      expect(WebMock).to have_requested(:get, SevenBankFxRate::SOURCE_URL).once
+    end
+
+    it 'returns consistent correct data for all threads' do
+      WebMock.reset_executed_requests!
+      3.times.map do
+        Thread.new do
+          expect(SevenBankFxRate.country_cn_currency_usd).to eq '0.0093211'
+        end
+      end.each(&:join)
+      expect(WebMock).to have_requested(:get, SevenBankFxRate::SOURCE_URL).once
+    end
+  end
 end

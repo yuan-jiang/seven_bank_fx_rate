@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module SevenBankFxRate
+  @mutex = Mutex.new
   class << self
     # Methods to access meta attributes of the latest exchange rate data
     %i[create_date apply_date apply_time data_count].each do |attr|
@@ -47,7 +48,9 @@ module SevenBankFxRate
     private
 
     def data
-      @data ||= Data.new
+      @mutex.synchronize do
+        @data ||= Data.new
+      end
     end
 
     GHOST_METHOD_PATTERN = /\Acountry_[A-Za-z]{2}_currency_[A-Za-z]{3}\z/.freeze
