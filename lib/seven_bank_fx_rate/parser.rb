@@ -8,27 +8,27 @@ module SevenBankFxRate
     # @param response the body of Net::HTTPResponse
     def initialize(response)
       @root = REXML::Document.new(response).root
-      @meta = Elements::Meta.new
-      @countries = []
     end
 
     # Parses the <header> section in original xml response
     # @return instance of SevenBankFxRate::Elements::Meta
     def meta
-      return @meta unless @root
+      meta = Elements::Meta.new
+      return meta unless @root
 
       %w[create_date apply_date apply_time data_count].each do |attr|
         @root.elements.each("header/#{attr.split('_').join}") do |e|
-          @meta.send("#{attr}=".to_sym, e.text.strip)
+          meta.send("#{attr}=".to_sym, e.text.strip)
         end
       end
-      @meta
+      meta
     end
 
     # Parses the <countries> section in original xml response
     # @return an array of SevenBankFxRate::Elements::Country
     def countries
-      return @countries unless @root
+      countries = []
+      return countries unless @root
 
       @root.elements.each('countries/country') do |country_tag|
         country = Elements::Country.new
@@ -38,9 +38,9 @@ module SevenBankFxRate
           end
         end
         country.currencies = currencies country_tag
-        @countries << country
+        countries << country
       end
-      @countries
+      countries
     end
 
     private
