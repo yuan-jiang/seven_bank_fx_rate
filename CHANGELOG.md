@@ -5,3 +5,6 @@
 - Switched unnecessary instance variables in `SevenBankFxRate::Parser` to local ones
 - Fixed `SevenBankFxRate::respond_to_missing` to strictly check missing method pattern
 - Added mutex to avoid extra http requests due to race condition with multiple threads
+
+### v1.1.1
+- Improved mutex on the memoization of `SevenBankFxRate` class instance variable `@data` 
