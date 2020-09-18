@@ -48,7 +48,7 @@ module SevenBankFxRate
     private
 
     def data
-      @mutex.synchronize do
+      @data || @mutex.synchronize do
         @data ||= Data.new
       end
     end
